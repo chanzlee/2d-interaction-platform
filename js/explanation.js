@@ -104,3 +104,11 @@ const draw = () => {
 
 // Checkout below url for canvas.getContext() and ctx.fillRect()
 // https://www.w3schools.com/tags/canvas_fillrect.asp
+
+// Format is  " context.fillRect(x,y,width,height); "
+
+
+const x = c => Math.round(c * canvas.width / state.cols)
+const y = r => Math.round(r * canvas.height / state.rows)
+
+This is no more than rescaling pixels into x and y units based on given cols and rows of canvas.

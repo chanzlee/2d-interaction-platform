@@ -3,11 +3,17 @@
   <head>
     <title>2d-game-base</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css">
+
+    <!-- set require, exports function and module as global scope so it can later not be problem when multiple js files import/exports modules w/o problems. -->
+
     <script>require=()=>({}); module={}; module.exports=()=>({})</script>
   </head>
   <body>
     <canvas id="canvas" width="1000" height="1000"></canvas>
+
+
+    <!-- make sure html loads and js files loads in following order. graphic.js requires core.js -->
     <script src="core.js"></script>
-    <script src="style.js"></script>
+    <script src="graphic.js"></script>
   </body>
 </html>

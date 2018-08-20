@@ -152,4 +152,16 @@ const next = spec({
 // Next function "specs" on objects and use value to merge with previous value of objects. It uses map to create a new one exactly the same as before to merge.
 
 
-*** 
+*** PART5 HOW MODULES ARE LINKED TOGETHER ***
+
+// base => core => graphic
+//
+// base provides customized function often used in other OOP.
+//
+// core includes back end functions to set algorithm for next state and according values, and constants used inside the function as arguments.
+
+
+Object.getOwnPropertyNames(base).map(p => global[p] = base[p])
+
+
+// At the beginning of the core js, above code makes sure that all the basic functions from base is on the global scope, make it possible to freely use throughout core js.

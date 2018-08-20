@@ -1,4 +1,4 @@
-//*** PART 1 : DRAW ANIMATION EVERY 0.1 SECOND ***
+*** PART 1 : DRAW ANIMATION EVERY 0.1 SECOND ***
 
 
 // initialize draw, when next time redraw, use this function: "step"
@@ -40,7 +40,8 @@ const initialState = () => ({
 
 
 
-//*** PART 2 : USER CAN CHANGE ANIMATION INDEPENDENT OF AUTO DRAWING
+*** PART 2 : USER CAN CHANGE ANIMATION INDEPENDENT OF AUTO DRAWING ***
+
 
 window.addEventListener('clicked', e => {
   switch (e.key) {
@@ -79,7 +80,9 @@ const initialState = () => ({
 
 
 
-//*** PART 3 : HOW WE ACTUALLY DRAW ***
+
+*** PART 3 : HOW WE DRAW ON CANVAS ***
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -111,4 +114,42 @@ const draw = () => {
 const x = c => Math.round(c * canvas.width / state.cols)
 const y = r => Math.round(r * canvas.height / state.rows)
 
-This is no more than rescaling pixels into x and y units based on given cols and rows of canvas.
+// This is no more than rescaling pixels into x and y units based on row/col of canvas we initially set.
+
+
+*** PART 4 HOW TO MAKE SNAKE LOOKS LIKE MOVING ***
+
+// We have to set next move it will take (vector) and coordinates of next snake head according to the last move.
+
+// Next values are based on state.
+
+const nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
+const nextHead  = state => state.snake.length == 0
+//initially gened at (2,2)
+  ? { x: 2, y: 2 }
+  : {
+// mode function allows two polars are actually connected to each other.(Just think of the Earth is round )
+  x: mod(state.cols)(state.snake[0].x + state.moves[0].x),
+  y: mod(state.rows)(state.snake[0].y + state.moves[0].y)
+}
+
+// snake consists of next head and drop the last head, moving forward by generate something on the next coordinates while erasing something on the previous coordinates.
+
+const nextSnake = state => ([nextHead(state)].concat(dropLast(state.snake)))
+
+// Think snake of the array, which consists of head that moves forward and then last of following array is dropped off for every movement.
+
+// Note every function accepts "state" argument which is automatically drawn by step function OR user intrigued events. state is defined by state = next(state) when it's automatically drawn.
+
+
+const next = spec({
+  rows:  prop('rows'),
+  cols:  prop('cols'),
+  moves: nextMoves,
+  snake: nextSnake,
+})
+
+// Next function "specs" on objects and use value to merge with previous value of objects. It uses map to create a new one exactly the same as before to merge.
+
+
+*** 
